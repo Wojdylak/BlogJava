@@ -24,8 +24,8 @@ public class UserService implements UserDetailsService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String nickname) throws UsernameNotFoundException {
-        User user = userRepository.findUserByNickname(nickname);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findUserByEmail(email);
         if (user != null){
             return buildUserForAuth(user);
         }
