@@ -1,0 +1,15 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" routerLink="">{{ appTitle }}</a>
+    
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" routerLink="">Strona główna</a>
+        <a *ngIf="!isLoggedIn" class="nav-item nav-link active" routerLink="/login">Logowanie</a>
+        <a *ngIf="!isLoggedIn" class="nav-item nav-link active" routerLink="/registration">Rejestracja</a>
+        <a *ngIf="isLoggedIn" class="nav-item nav-link active" routerLink="/account">Twoje konto</a>
+        <a *ngIf="isLoggedIn" class="nav-item nav-link active" (click)="logoutButtonClicked()" routerLink="/">Wyloguj</a>
+      </div>
+    </div>
+  </div>
+</nav>

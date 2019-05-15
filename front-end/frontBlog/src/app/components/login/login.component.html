@@ -5,13 +5,16 @@
               <div class="card-header">Logowanie</div>
 
               <div class="card-body">
-                  <form method="POST" action="">
-
+                  <form (ngSubmit)="loginButtonClicked()" [formGroup]="loginParams">
+                    <div *ngIf="!isLoggedOk" class="alert alert-danger" role="alert" style="text-align: center;">
+                      Podano niepoprawne dane. Proszę zaloguj się ponownie!
+                    </div>
                       <div class="form-group row">
                           <label for="email" class="col-md-4 col-form-label text-md-right">E-mail</label>
 
                           <div class="col-md-6">
-                              <input id="email" type="email" class="form-control" name="email" value="" required autofocus>
+                              <input id="email" type="email" class="form-control" name="email"
+                                     formControlName="username" value="" required autofocus>
                           </div>
                       </div>
 
@@ -19,25 +22,13 @@
                           <label for="password" class="col-md-4 col-form-label text-md-right">Hasło</label>
 
                           <div class="col-md-6">
-                              <input id="password" type="password" class="form-control" name="password" required>
-                          </div>
-                      </div>
-
-                      <div class="form-group row">
-                          <div class="col-md-6 offset-md-4">
-                              <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" name="remember" id="remember">
-
-                                  <label class="form-check-label" for="remember">
-                                      Zapamiętaj mnie
-                                  </label>
-                              </div>
+                              <input id="password" type="password" formControlName="password" class="form-control" name="password" required>
                           </div>
                       </div>
 
                       <div class="form-group row mb-0">
                           <div class="col-md-8 offset-md-4">
-                              <button type="submit" class="btn btn-primary">
+                              <button type="submit" class="btn btn-primary" [disabled]="!loginParams.valid">
                                   Zaloguj
                               </button>
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PostService } from '../service/post.service';
+import { PostService } from '../../service/post.service';
 
 @Component({
   selector: 'app-home',

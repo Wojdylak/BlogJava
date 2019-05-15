@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .csrf().disable()
                     .authorizeRequests()
-                        .antMatchers("/", "/login/**", "/error/**").permitAll()
+                        .antMatchers("/", "/login/**", "/error/**", "/user/getUser/**", "/user/create/**").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .logout()
                         .logoutSuccessHandler(logoutSuccessHandler())
                         .deleteCookies("JSESSIONID")
-                        .invalidateHttpSession(true);;
+                        .invalidateHttpSession(true);
     }
 
     @Bean

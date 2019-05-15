@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.DTO.UserDTO;
+import com.example.demo.DTO.UserPrincipal;
 import com.example.demo.entities.User;
 import com.example.demo.service.UserService;
 import com.example.demo.validators.DTOValidator;
@@ -17,6 +18,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+
+    @GetMapping("/getUser")
+    public UserPrincipal getPrincipal() {
+        return userService.getUserPrincipal();
+    }
 
     @GetMapping("/all")
     public List<User> getAllUser(){ return userService.getAllUser();}
