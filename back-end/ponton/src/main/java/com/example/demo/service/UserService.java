@@ -1,12 +1,16 @@
 package com.example.demo.service;
 
 import com.example.demo.DTO.UserDTO;
+import com.example.demo.DTO.UserPrincipal;
 import com.example.demo.entities.User;
 import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,12 +28,13 @@ public class UserService implements UserDetailsService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String nickname) throws UsernameNotFoundException {
-        User user = userRepository.findUserByNickname(nickname);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findUsersByEmail(email).get(0);
         if (user != null){
             return buildUserForAuth(user);
+        } else {
+            throw new UsernameNotFoundException("Unauthorized");
         }
-        return null;
     }
 
     private org.springframework.security.core.userdetails.User buildUserForAuth(User user){
@@ -75,5 +80,15 @@ public class UserService implements UserDetailsService {
         user.setEmail(userDTO.getEmail());
         user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
         return user;
+    }
+
+    public UserPrincipal getUserPrincipal() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+            String currentUserName = authentication.getName();
+            String currentUserRole = ((GrantedAuthority)authentication.getAuthorities().toArray()[0]).getAuthority();
+            return new UserPrincipal(currentUserName, currentUserRole);
+        }
+        return null;
     }
 }
