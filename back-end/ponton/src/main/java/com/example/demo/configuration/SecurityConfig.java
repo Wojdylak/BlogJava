@@ -30,10 +30,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic()
-                    .authenticationEntryPoint(restAuthenticationEntryPoint)
-                .and()
-                    .exceptionHandling()
-                        .authenticationEntryPoint(restAuthenticationEntryPoint)
+//                    .authenticationEntryPoint(restAuthenticationEntryPoint)
+//                .and()
+//                    .exceptionHandling()
+//                        .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
                     .cors()
                 .and()

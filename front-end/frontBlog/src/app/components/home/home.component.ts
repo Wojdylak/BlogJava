@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PostService } from '../../service/post.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {Router} from '@angular/router';
+import { PostService } from '../../service/post/post.service';
+import { Post } from 'src/app/entities/Post';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +18,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.title = "Blog o komputerach"
-    this.posts = this.postService.getPosts();
+    this.posts = this.getAllPosts();
+  }
+
+  async getAllPosts() {
+    const response: Post[] = await this.postService.getAllPost();
+    this.posts = response;
   }
 
 }
