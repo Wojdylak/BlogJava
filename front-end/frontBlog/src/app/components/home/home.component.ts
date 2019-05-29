@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
-import {Router} from '@angular/router';
 import { PostService } from '../../service/post/post.service';
 import { Post } from 'src/app/entities/Post';
 
@@ -12,17 +11,17 @@ import { Post } from 'src/app/entities/Post';
 export class HomeComponent implements OnInit {
 
   title: string;
-  posts: Object;
+  posts: Post[] = [];
 
   constructor(private postService: PostService) { }
 
   ngOnInit() {
-    this.title = "Blog o komputerach"
-    this.posts = this.getAllPosts();
+    this.title = 'Blog o komputerach';
+    this.getAllPosts();
   }
 
   async getAllPosts() {
-    const response: Post[] = await this.postService.getAllPost();
+    const response: any = await this.postService.getAllPost().catch((error: HttpErrorResponse) => {console.log(error)});
     this.posts = response;
   }
 

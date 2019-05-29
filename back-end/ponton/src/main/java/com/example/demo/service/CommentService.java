@@ -17,6 +17,7 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
+    private final UserService userService;
 
     public List<Comment> getAllComment(){
         return commentRepository.findAll();
@@ -28,7 +29,10 @@ public class CommentService {
     }
 
     public Comment createComment(CommentDTO commentDTO){
+        Post post = postRepository.findById(commentDTO.getPostId()).orElseThrow(()-> new EntityNotFoundException("post"));
         Comment comment = new Comment();
+        comment.setUser(userService.getLoggedInUser());
+        comment.setPost(post);
         return commentRepository.save(castCommentDTOToComment(comment, commentDTO));
     }
 

@@ -17,6 +17,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final CategoryRepository categoryRepository;
+    private final UserService userService;
 
     public List<Post> getAllPosts(){
         return postRepository.findAll();
@@ -33,6 +34,7 @@ public class PostService {
 
     public Post createPost(PostDTO postDTO){
         Post post = new Post();
+        post.setUser(userService.getLoggedInUser());
         return postRepository.save(castPostDTOToPost(post, postDTO));
     }
 

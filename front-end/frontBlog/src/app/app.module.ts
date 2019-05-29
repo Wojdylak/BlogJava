@@ -12,6 +12,8 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { AccountComponent } from './components/account/account.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UserService} from './service/user/user.service';
+import { CreatePostComponent } from './components/post/create-post/create-post.component';
+import { PresentPostComponent } from './components/post/present-post/present-post.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import {UserService} from './service/user/user.service';
     LoginComponent,
     RegistrationComponent,
     TruncatePipe,
-    AccountComponent
+    AccountComponent,
+    CreatePostComponent,
+    PresentPostComponent
   ],
   imports: [
     BrowserModule,

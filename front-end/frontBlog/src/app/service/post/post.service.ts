@@ -14,7 +14,7 @@ export class PostService {
   constructor(private http: HttpClient) { }
 
   async getAllPost() {
-    return await this.http.get<Post>(this.URL + '/all', {withCredentials: true}).toPromise();
+    return await this.http.get<Post[]>(this.URL + '/all', {withCredentials: true}).toPromise();
   }
 
   async getOnePost(post_id: string){
@@ -22,7 +22,7 @@ export class PostService {
   }
 
   async getAllPostByCategory(category_id: string){
-    return await this.http.get<Post>(this.URL + '/allBycategory/' + category_id, {withCredentials: true}).toPromise();
+    return await this.http.get<Post>(this.URL + '/allByCategory/' + category_id, {withCredentials: true}).toPromise();
   }
 
   createPost(item: PostDTO): Observable<any> {

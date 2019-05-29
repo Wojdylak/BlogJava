@@ -91,4 +91,11 @@ public class UserService implements UserDetailsService {
         }
         return null;
     }
+
+    public User getLoggedInUser() {
+        UserPrincipal userPrincipal = getUserPrincipal();
+        if (userPrincipal != null)
+            return userRepository.findUsersByNickname(userPrincipal.getUsername()).get(0);
+        return null;
+    }
 }

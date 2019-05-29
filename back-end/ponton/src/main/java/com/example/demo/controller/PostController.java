@@ -28,7 +28,7 @@ public class PostController {
         return postService.getAllPostsByCategoryId(categoryId);
     }
 
-    @GetMapping("/one/postId")
+    @GetMapping("/one/")
     public Post getPostById(@RequestParam Integer postId){
         return postService.getPostById(postId);
     }
