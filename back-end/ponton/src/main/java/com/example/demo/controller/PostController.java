@@ -23,13 +23,13 @@ public class PostController {
         return postService.getAllPosts();
     }
 
-    @GetMapping("/allByCategory/categoryId")
-    public List<Post> getAllPostsByCategoryId(@RequestParam Integer categoryId){
+    @GetMapping("/allByCategory/{categoryId}")
+    public List<Post> getAllPostsByCategoryId(@PathVariable Integer categoryId){
         return postService.getAllPostsByCategoryId(categoryId);
     }
 
-    @GetMapping("/one/")
-    public Post getPostById(@RequestParam Integer postId){
+    @GetMapping("/one/{postId}")
+    public Post getPostById(@PathVariable Integer postId){
         return postService.getPostById(postId);
     }
 
@@ -39,14 +39,14 @@ public class PostController {
         return postService.createPost(postDTO);
     }
 
-    @PostMapping("/update/postId")
-    public Post updatePost(@RequestParam Integer postId, @RequestBody @Valid PostDTO postDTO, BindingResult bindingResult){
+    @PostMapping("/update/{postId}")
+    public Post updatePost(@PathVariable Integer postId, @RequestBody @Valid PostDTO postDTO, BindingResult bindingResult){
         DTOValidator.validate(bindingResult);
         return postService.updatePost(postId, postDTO);
     }
 
-    @DeleteMapping("/delete/postId")
-    public void deletePost(@RequestParam Integer postId){
+    @DeleteMapping("/delete/{postId}")
+    public void deletePost(@PathVariable Integer postId){
         postService.deletePost(postId);
     }
 }

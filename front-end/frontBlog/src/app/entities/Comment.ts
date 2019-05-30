@@ -2,19 +2,19 @@ import { User } from './User';
 import { Post } from './Post';
 
 export class Comments{
-    comment_id: number;
+    commentId: Number;
     user: User;
     post: Post;
     text: string;
-    create_date: Date;
-    modified_date: Date;
+    createDate: Date;
+    modifiedDate: Date;
 
-    constructor(commentId: number, user: User, post: Post, text: string, createDate: Date, modifiedDate: Date){
-        this.comment_id = commentId;
+    constructor(commentId: Number, user: User, post: Post, text: string, createDate: Date, modifiedDate: Date){
+        this.commentId = commentId;
         this.user = user;
         this.post = post;
         this.text = text;
-        this.create_date = createDate;
-        this.modified_date = modifiedDate;
+        this.createDate = createDate;
+        this.modifiedDate = modifiedDate;
     }
 }

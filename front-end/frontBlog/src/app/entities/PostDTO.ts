@@ -3,8 +3,8 @@ export class PostDTO {
     text: Text;
     title: string;
 
-  constructor(category_id: Number, text: Text, title: string) {
-    this.categoryId = category_id;
+  constructor(categoryId: Number, text: Text, title: string) {
+    this.categoryId = categoryId;
     this.text = text;
     this.title = title;
   }

@@ -29,14 +29,14 @@ public class CategoryController {
         return categoryService.createCategory(categoryDTO);
     }
 
-    @PostMapping("/update/categoryId")
-    public Category updateCategory(@RequestParam Integer categoryId, @RequestBody @Valid CategoryDTO categoryDTO, BindingResult bindingResult){
+    @PostMapping("/update/{categoryId}")
+    public Category updateCategory(@PathVariable Integer categoryId, @RequestBody @Valid CategoryDTO categoryDTO, BindingResult bindingResult){
         DTOValidator.validate(bindingResult);
         return categoryService.updateCategory(categoryId, categoryDTO);
     }
 
-    @DeleteMapping("/delete/categoryId")
-    public void deleteCategory(@RequestParam Integer categoryId){
+    @DeleteMapping("/delete/{categoryId}")
+    public void deleteCategory(@PathVariable Integer categoryId){
         categoryService.deleteCategory(categoryId);
     }
 }

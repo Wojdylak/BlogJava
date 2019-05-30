@@ -24,11 +24,11 @@ export class CommentService {
     return this.http.post<Comment>(this.URL + '/create', item, {withCredentials: true});
   }
 
-  updateComment(id: number, item: CommentDTO){
+  updateComment(id: Number, item: CommentDTO){
     return this.http.post<Comment>(this.URL + '/update/' + id, item, {withCredentials: true});
   }
 
-  deleteComment(id: number){
+  deleteComment(id: Number){
     return this.http.delete<Comment>(this.URL + '/delete/' + id, {withCredentials: true});
   }
 

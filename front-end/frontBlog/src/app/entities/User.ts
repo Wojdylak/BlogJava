@@ -2,8 +2,8 @@ export class User {
     user_id: Number;
     nickname: string;
     email: string;
-    create_date: Date;
-    modified_date: Date;
+    createDate: Date;
+    modifiedDate: Date;
     ban: boolean;
     role: string;
 

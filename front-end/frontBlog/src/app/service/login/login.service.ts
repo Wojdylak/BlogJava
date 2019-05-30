@@ -56,7 +56,7 @@ export class LoginService {
     const principal = await this.http.get<UserPrincipal>(this.URL + '/user/getUser', {withCredentials: true}).toPromise();
     if (principal != null) {
       this.role.next(principal.role);
-      this.username.next('Logged as: ' + principal.username);
+      this.username.next( principal.username);
       this.loggedIn.next(true);
     } else {
       this.role.next('null');

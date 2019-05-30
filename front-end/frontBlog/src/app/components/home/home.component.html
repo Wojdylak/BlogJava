@@ -5,11 +5,15 @@
     <div class="col-8 my-3">
         <div class="card">
           <div class="card-header">
-            <h2> {{post.title}} </h2>
+            <a class="post-small" [routerLink]="['/post', post.postId ]" >
+              <h2> {{post.title}} </h2>
+            </a>
           </div>
           <div class="card-body">
-            <span class="post-info"> Kategoria:{{ post.category.name }},  Stworzono:{{ post.createDate | date }} </span>  
-            <p> {{ post.text | limitTo:150  }} </p>
+            <span class="post-info"> Kategoria:{{ post.category.name }},  Stworzono:{{ post.createDate | date }} </span>
+            <a class="post-small" [routerLink]="['/post', post.postId ]" >
+              <p> {{ post.text | limitTo:150  }} </p>
+            </a>
           </div>
         </div>
     </div>

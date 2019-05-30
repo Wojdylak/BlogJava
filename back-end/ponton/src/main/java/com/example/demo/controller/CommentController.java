@@ -21,8 +21,8 @@ public class CommentController {
     @GetMapping("/all")
     public List<Comment> getAllComment(){ return commentService.getAllComment();}
 
-    @GetMapping("/allByPost/postId")
-    public List<Comment> getAllCommentByPostId(@RequestParam Integer postId){
+    @GetMapping("/allByPost/{postId}")
+    public List<Comment> getAllCommentByPostId(@PathVariable Integer postId){
         return commentService.getAllCommentByPostId(postId);
     }
 
@@ -32,14 +32,14 @@ public class CommentController {
         return commentService.createComment(commentDTO);
     }
 
-    @PostMapping("/update/commentId")
-    public Comment updateComment(@RequestParam Integer commentId, @RequestBody @Valid CommentDTO commentDTO, BindingResult bindingResult){
+    @PostMapping("/update/{commentId}")
+    public Comment updateComment(@PathVariable Integer commentId, @RequestBody @Valid CommentDTO commentDTO, BindingResult bindingResult){
         DTOValidator.validate(bindingResult);
         return commentService.updateComment(commentId, commentDTO);
     }
 
-    @DeleteMapping("/delete/commentId")
-    public void deleteComment(@RequestParam Integer commentId){
+    @DeleteMapping("/delete/{commentId}")
+    public void deleteComment(@PathVariable Integer commentId){
         commentService.deleteComment(commentId);
     }
 }

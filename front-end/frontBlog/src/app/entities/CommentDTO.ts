@@ -1,9 +1,9 @@
 export class CommentDTO {
-    name: string;
-    postId: number;
+    text: string;
+    postId: Number;
 
-    constructor(name: string, post_id: number){
-        this.name = name;
-        this.postId = post_id;
+    constructor(text: string, postId: Number){
+        this.text = text;
+        this.postId = postId;
     }
 }

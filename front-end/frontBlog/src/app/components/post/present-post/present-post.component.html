@@ -1,40 +1,46 @@
-<!-- <div class="container">
+<div class="container">
   <div class="row">
     <div class="col-lg-8">
-      <h1 class="mt-4">
-        {{ post.title }}
-      </h1>
-      <p class="lead">
-        by {{post.user.nickname}}
-      </p>
-      <hr>
-      <p>Stworzono {{post.create_date}}</p>
-      <hr>
-      <p class="lead">
-        {{post.text}}
-      </p> -->
+      <div *ngIf="isPostLoaded">
+        <h1 class="mt-4">
+          {{ post.title }}
+        </h1>
+        <p class="lead">
+          by {{post.user.nickname}}
+        </p>
+        <hr>
+        <p>Stworzono {{post.createDate | date }}</p>
+        <hr>
+        <p class="lead">
+          {{post.text}}
+        </p>
+    </div>
        <!-- Comments Form -->
-      <!-- <div class="card my-4">
+      <div class="card my-4" *ngIf="isLoggedIn">
         <h5 class="card-header">Komentarz:</h5>
         <div class="card-body">
-          <form >
+          <form (ngSubmit)="createCommentButtonClicked()" [formGroup]="createCommentParams" >
             <div class="form-group">
-              <textarea class="form-control" rows="3"></textarea>
+              <textarea class="form-control" rows="3" formControlName="text" ></textarea>
             </div>
             <button class="btn btn-primary" type="submit">Dodaj</button>
           </form>
         </div>
-      </div> -->
+      </div>
         <!-- Single Comment -->
-      <!-- <div class="media mb-4">
+      <div class="media mb-4" *ngFor="let comment of comments">
         <div class="media-body">
-          <h5 class="mt-0">autor</h5>
-          Tresc
+          <p class="lead">
+            Stworzono {{comment.createDate | date}}
+          </p>
+          <h5 class="mt-0"> {{ comment.user.nickname }} </h5>
+          {{ comment.text }}
         </div>
+        <span *ngIf="comment.user.nickname == username" (click)="deleteCommentClicked(comment.commentId)" >Usuń</span>
       </div>
     </div>
     <div class="col">
 
     </div>
   </div>
-</div> -->
+</div>
