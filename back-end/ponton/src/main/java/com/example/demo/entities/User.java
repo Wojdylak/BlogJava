@@ -21,8 +21,10 @@ public class User {
     @Setter(AccessLevel.NONE)
     private Integer userId;
 
+    @Column(unique = true)
     private String nickname;
 
+    @Column(unique = true)
     private String email;
 
     @JsonIgnore

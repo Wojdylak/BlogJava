@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="row">
+    <div class="col-2"></div>
+    <div *ngIf="user" class="col">
+        <h1>Twoje konto</h1>
+        <p>Nick: {{ user.nickname }} </p>
+        <p>Email {{ user.email }} </p>
+        <p>Stworzono {{ user.createDate | date}} </p>
+        <p>Modifikowano {{ user.modifiedDate | date}} </p>
+        <button class="btn btn-primary" routerLink="/account/edit">Edytuj</button>
+        <button class="btn btn-danger">Usuń</button>
+    </div>
+    <div class="col-2"></div>
+  </div>
+</div>

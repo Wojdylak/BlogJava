@@ -30,6 +30,9 @@ public class UserController {
     @GetMapping("/one/{userId}")
     public User getUserById(@PathVariable Integer userId){ return userService.getUserById(userId);}
 
+    @GetMapping("/oneNickname/{nickname}")
+    public User getUserByNickname(@PathVariable String nickname){return userService.getUserByNickname(nickname);}
+
     @PostMapping("/create")
     public User createUser(@RequestBody @Valid UserDTO userDTO, BindingResult bindingResult){
         DTOValidator.validate(bindingResult);

@@ -4,6 +4,7 @@ import com.example.demo.DTO.UserDTO;
 import com.example.demo.DTO.UserPrincipal;
 import com.example.demo.entities.User;
 import com.example.demo.exceptions.EntityNotFoundException;
+import com.example.demo.exceptions.WrongDataException;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -53,10 +54,18 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(userId).orElseThrow(()-> new EntityNotFoundException("user"));
     }
 
+    public User getUserByNickname(String nickname){
+        return userRepository.findUsersByNickname(nickname).get(0);
+    }
+
     public User createUser(UserDTO userDTO){
-        User user = new User();
-        user.setRole("user");
-        return userRepository.save(castUserDTOToUser(user, userDTO));
+        if (userRepository.existsByNickname(userDTO.getNickname())){
+            throw new WrongDataException();
+        } else {
+            User user = new User();
+            user.setRole("ROLE_USER");
+            return userRepository.save(castUserDTOToUser(user, userDTO));
+        }
     }
 
     public User updateUser(Integer userId, UserDTO userDTO){

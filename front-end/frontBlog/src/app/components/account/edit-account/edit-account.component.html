@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col-2"></div>
+    <div *ngIf="user" class="col">
+      <div class="row">
+        <form (ngSubmit)="emailButtonClicked()" [formGroup]="emailParams" >
+          <h2>Zmień e-mail</h2>
+          <div class="form-group">
+            <label for="email" class="col-md-4 col-form-label text-md-right"> E-mail</label>
+            <input id="email" type="text" class="form-control" formControlName="email" value="{{user.email}}" required>
+          </div>
+          <button class="btn btn-primary" [disabled]="!emailParams.valid"> Zmień </button>
+        </form>
+      </div>
+      <div class="row">
+        <form (ngSubmit)="passwordButtonClicked()" [formGroup]="passwordParams" >
+            <h2>Zmień hasło</h2>
+            <div class="form-group">
+              <label for="password" class="col-md-4 col-form-label text-md-right"> Hasło </label>
+              <input id="password" type="password" class="form-control" formControlName="password" value="" required>
+            </div>
+            <div class="form-group">
+              <label for="password-confirm" class="col-md-4 col-form-label text-md-right"> Powtórz hasło </label>
+              <input id="password-confirm" type="password" class="form-control" formControlName="confirmPassword" value="" required>
+            </div>
+            <button class="btn btn-primary" [disabled]="!passwordParams.valid"> Zmień </button>
+          </form>
+      </div>
+    </div>
+    <div class="col-2"></div>
+  </div>
+</div>

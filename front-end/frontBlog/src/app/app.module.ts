@@ -9,11 +9,12 @@ import { NavComponent } from './components/nav/nav.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
-import { AccountComponent } from './components/account/account.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UserService} from './service/user/user.service';
 import { CreatePostComponent } from './components/post/create-post/create-post.component';
 import { PresentPostComponent } from './components/post/present-post/present-post.component';
+import { PresentAccountComponent } from './components/account/present-account/present-account.component';
+import { EditAccountComponent } from './components/account/edit-account/edit-account.component';
 
 @NgModule({
   declarations: [
@@ -23,9 +24,10 @@ import { PresentPostComponent } from './components/post/present-post/present-pos
     LoginComponent,
     RegistrationComponent,
     TruncatePipe,
-    AccountComponent,
     CreatePostComponent,
-    PresentPostComponent
+    PresentPostComponent,
+    PresentAccountComponent,
+    EditAccountComponent
   ],
   imports: [
     BrowserModule,
