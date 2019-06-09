@@ -21,6 +21,7 @@ export class PresentPostComponent implements OnInit {
 
   post_id: string;
   isPostLoaded = false;
+  letDeleteComment = false;
   post: Post;
   comments: Comment[] = [];
 
@@ -35,19 +36,18 @@ export class PresentPostComponent implements OnInit {
               private postService: PostService,
               private commentService: CommentService,
               private formBuilder: FormBuilder,
-              private router: Router, ) {}
+              private router: Router, ) {
+    this.loginService.getUserCredential().then(() => {
+      this.initUser().then(() => {
+        if (this.role == "ROLE_ADMIN" || this.role == "ROLE_WRITER"){
+          this.letDeleteComment = true;
+        }
+      });
+    });
+              }
 
   ngOnInit() {
     this.initFormGroup();
-    this.loginService.getIsLoggedOk().subscribe(isLoggedIn => {
-      this.isLoggedIn = isLoggedIn;
-    });
-    this.loginService.getRole().subscribe(role => {
-      this.role = role;
-    });
-    this.loginService.getUsername().subscribe(username => {
-      this.username = username;
-    });
     this.activatedRoute.paramMap.subscribe(params => {
       this.post_id = params.get("id")
     })
@@ -55,6 +55,18 @@ export class PresentPostComponent implements OnInit {
     this.getOnePost().then(() => this.isPostLoaded = true);
     this.getComments();
 
+  }
+
+  async initUser(){
+    await this.loginService.getIsLoggedOk().subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+    });
+    await this.loginService.getRole().subscribe(role => {
+      this.role = role;
+    });
+    await this.loginService.getUsername().subscribe(username => {
+      this.username = username;
+    });
   }
 
   async getOnePost(){

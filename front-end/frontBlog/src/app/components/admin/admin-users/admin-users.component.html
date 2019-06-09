@@ -1,0 +1,41 @@
+<div class="container">
+  <h1>Użytkownicy</h1>
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped" >
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nick</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Rola</th>
+            <th scope="col">Data stworzenia</th>
+            <th scope="col">Data modyfikacji</th>
+            <th scope="col">Zmień role</th>
+            <th scope="col">Ban/Unban</th>
+            <th scope="col">Usuń</th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr [class.banUser]="user.ban" *ngFor="let user of users; let i = index">
+            <th scope="row">{{ i }}</th>
+            <td>{{ user.nickname }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>{{ user.createDate | date }}</td>
+            <td>{{ user.modifiedDate | date }}</td>
+            <td>
+              <button *ngIf="user.role=='ROLE_WRITER'" class="btn btn-primary" (click)="setUserButtonClicked(user.userId)" >Użytkownik</button> 
+              <button *ngIf="user.role=='ROLE_USER'" class="btn btn-primary" (click)="setWriterButtonClicked(user.userId)" >Pisarz</button> 
+            </td>
+            <td> 
+              <button *ngIf="!user.ban" class="btn btn-warning" (click)="banButtonClicked(user.userId)" >Ban</button> 
+              <button *ngIf="user.ban" class="btn btn-succes" (click)="unbanButtonClicked(user.userId)" >Unban</button> 
+            </td>
+            <td> <button class="btn btn-danger" (click)="deleteUserButtonClicked(user.userId)" >Usuń</button> </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

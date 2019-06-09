@@ -8,7 +8,7 @@
         <p>Stworzono {{ user.createDate | date}} </p>
         <p>Modifikowano {{ user.modifiedDate | date}} </p>
         <button class="btn btn-primary" routerLink="/account/edit">Edytuj</button>
-        <button class="btn btn-danger">Usuń</button>
+        <button class="btn btn-danger" (click)="deleteButtonClicked()" >Usuń</button>
     </div>
     <div class="col-2"></div>
   </div>

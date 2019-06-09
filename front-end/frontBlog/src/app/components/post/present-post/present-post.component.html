@@ -30,13 +30,12 @@
         <!-- Single Comment -->
       <div class="media mb-4" *ngFor="let comment of comments">
         <div class="media-body">
-          <p class="lead">
-            Stworzono {{comment.createDate | date}}
-          </p>
-          <h5 class="mt-0"> {{ comment.user.nickname }} </h5>
+          <h5 class="mt-0">Użytkownik: {{ comment.user.nickname }} </h5>
+          <p>Dodano {{comment.createDate | date}}</p>
           {{ comment.text }}
+          <hr>
         </div>
-        <span *ngIf="comment.user.nickname == username" (click)="deleteCommentClicked(comment.commentId)" >Usuń</span>
+        <span style="color: red" *ngIf="comment.user.nickname==username || letDeleteComment" (click)="deleteCommentClicked(comment.commentId)" >Usuń</span>
       </div>
     </div>
     <div class="col">

@@ -7,6 +7,7 @@ import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.exceptions.WrongDataException;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,7 +32,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findUsersByEmail(email).get(0);
-        if (user != null){
+        if (user != null && !user.getBan()){
             return buildUserForAuth(user);
         } else {
             throw new UsernameNotFoundException("Unauthorized");
@@ -63,6 +64,7 @@ public class UserService implements UserDetailsService {
             throw new WrongDataException();
         } else {
             User user = new User();
+            user.setBan(false);
             user.setRole("ROLE_USER");
             return userRepository.save(castUserDTOToUser(user, userDTO));
         }
@@ -73,9 +75,44 @@ public class UserService implements UserDetailsService {
         return userRepository.save(castUserDTOToUser(user, userDTO));
     }
 
+    public void setRoleWriter(Integer userId){
+        User user = userRepository.findById(userId).orElseThrow(()-> new EntityNotFoundException("user"));
+        user.setRole("ROLE_WRITER");
+        userRepository.save(user);
+    }
+
+    public void setRoleUser(Integer userId){
+        User user = userRepository.findById(userId).orElseThrow(()-> new EntityNotFoundException("user"));
+        user.setRole("ROLE_USER");
+        userRepository.save(user);
+    }
+
+    public User updateUserEmail(Integer userId, String email){
+        if (userRepository.existsByEmail(email)) {
+          throw new WrongDataException();
+        }
+        else{
+            User user = userRepository.findById(userId).orElseThrow(()-> new EntityNotFoundException("user"));
+            user.setEmail(email);
+            return userRepository.save(user);
+        }
+    }
+
+    public User updateUserPassword(Integer userId, String password){
+        User user = userRepository.findById(userId).orElseThrow(()-> new EntityNotFoundException("user"));
+        user.setPassword(bCryptPasswordEncoder.encode(password));
+        return userRepository.save(user);
+    }
+
     public void banUser(Integer userId){
         User user = userRepository.findById(userId).orElseThrow(()-> new EntityNotFoundException("user"));
         user.setBan(true);
+        userRepository.save(user);
+    }
+
+    public void unbanUser(Integer userId){
+        User user = userRepository.findById(userId).orElseThrow(()-> new EntityNotFoundException("user"));
+        user.setBan(false);
         userRepository.save(user);
     }
 

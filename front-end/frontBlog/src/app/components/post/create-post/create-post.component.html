@@ -1,3 +1,42 @@
-<p>
-  create-post works!
-</p>
+<div class="container">
+  <div class="row mb-4">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <h1>Dodaj post</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <form (ngSubmit)="createPostButtonClicked()" [formGroup]="createPostParams">
+        <div class="form-group row">
+          <label for="title" class="col-md-2 col-form-label text-md-right"> Tytuł:</label>
+          <div class="col-md-6">
+            <input id="title" type="text" class="form-control" formControlName="title" value="" required>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="category" class="col-md-2 col-form-label text-md-right"> Kategoria:</label>
+          <div class="col-md-6">
+            <select id="category" formControlName="category">
+              <option [value]="category.categoryId" *ngFor="let category of categories" > {{category.name}} </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="text" class="col-md-2 col-form-label text-md-right"> Treść:</label>
+          <div class="col-md-8">
+            <textarea class="form-control" cols="30" rows="15" formControlName="text"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-10">
+            <button class="btn btn-primary" [disabled]="!createPostParams.valid">Stwórz</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

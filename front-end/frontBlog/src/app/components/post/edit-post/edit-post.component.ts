@@ -1,26 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Category } from 'src/app/entities/Category';
+import { Post } from 'src/app/entities/Post';
+import { LoginService } from 'src/app/service/login/login.service';
 import { PostService } from 'src/app/service/post/post.service';
 import { CategoryService } from 'src/app/service/category/category.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LoginService } from 'src/app/service/login/login.service';
 import { PostDTO } from 'src/app/entities/PostDTO';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-create-post',
-  templateUrl: './create-post.component.html',
-  styleUrls: ['./create-post.component.scss']
+  selector: 'app-edit-post',
+  templateUrl: './edit-post.component.html',
+  styleUrls: ['./edit-post.component.scss']
 })
-export class CreatePostComponent implements OnInit {
+export class EditPostComponent implements OnInit {
 
   username = 'Not logged in';
   role = '';
   isLoggedIn = false;
+  post_id;
+  isPostLoaded = false;
+  post: Post;
   categories: Category[] = [];
 
-  createPostParams: FormGroup;
+  updatePostParams: FormGroup;
 
   titleFormControl = new FormControl('', [
     Validators.required
@@ -31,14 +35,13 @@ export class CreatePostComponent implements OnInit {
   textFormControl = new FormControl('', [
     Validators.required
   ]);
-  
-
 
   constructor(private loginService: LoginService,
               private postService: PostService,
               private categoryService: CategoryService,
               private formBuilder: FormBuilder,
-              private router: Router) {
+              private router: Router,
+              private activatedRoute: ActivatedRoute) { 
     this.loginService.getUserCredential().then(() => {
       this.initUser().then(() => {
         if (this.isLoggedIn == false) {
@@ -49,10 +52,15 @@ export class CreatePostComponent implements OnInit {
         }
       });
     });
-               }
+              }
 
   ngOnInit() {
     this.initFormGroup();
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.post_id = params.get("id")
+    })
+
+    this.getPost().then(() => this.isPostLoaded = true);
     this.getAllCategory();
   }
 
@@ -67,9 +75,9 @@ export class CreatePostComponent implements OnInit {
       this.username = username;
     });
   }
-
+  
   initFormGroup(){
-    this.createPostParams = this.formBuilder.group({
+    this.updatePostParams = this.formBuilder.group({
       title: this.titleFormControl,
       category: this.categoryFormControl,
       text: this.textFormControl,
@@ -81,20 +89,25 @@ export class CreatePostComponent implements OnInit {
     this.categories = response;
   }
 
-  async createPostButtonClicked(){
-    const title = this.createPostParams.value.title;
-    const category = this.createPostParams.value.category;
-    const text = this.createPostParams.value.text;
+  async getPost(){
+    const response: any = await this.postService.getOnePost(this.post_id).catch((error: HttpErrorResponse) => {console.log(error)});
+    this.post = response;
+  }
+
+  async updatePostButtonClicked(){
+    const title = this.updatePostParams.value.title;
+    const category = this.updatePostParams.value.category;
+    const text = this.updatePostParams.value.text;
     const post: PostDTO = new PostDTO(category, text, title);
-    await this.createPost(post).then((response) => {
+    await this.updatePost(post).then((response) => {
       if (response != null){
         console.log('ups, bad response');
       }
     })
   }
 
-  async createPost(post: PostDTO){
-    await this.postService.createPost(post).subscribe((response) => {
+  async updatePost(post: PostDTO){
+    await this.postService.updatePost(this.post_id, post).subscribe((response) => {
       if (response != null) {
         this.router.navigate(['/post', response.postId]);
       } else {

@@ -26,15 +26,37 @@ export class UserService {
   }
 
   async getOneUserByNickname(nickname: string) {
+    if (nickname == null || nickname == '')
+      return;
     return await this.http.get<User[]>(this.URL + '/oneNickname/' + nickname, {withCredentials: true}).toPromise();
   }
 
-  banUser(id: string){
+  setRoleUser(id: Number){
+    return this.http.post<User>(this.URL + '/setRoleUser/' + id, {withCredentials: true});
+  }
+
+  setRoleWriter(id: Number){
+    return this.http.post<User>(this.URL + '/setRoleWriter/' + id, {withCredentials: true});
+  }
+
+  banUser(id: Number){
     return this.http.post<User>(this.URL + '/ban/' + id, {withCredentials: true});
+  }
+
+  unbanUser(id: Number){
+    return this.http.post<User>(this.URL + '/unban/' + id, {withCredentials: true});
   }
 
   updateUser(id: Number, item: UserDTO){
     return this.http.post<User>(this.URL + '/update/' + id, item, {withCredentials: true});
+  }
+
+  updateUserEmail(id: Number, item: String){
+    return this.http.post<User>(this.URL + '/updateEmail/' + id, item, {withCredentials: true});
+  }
+
+  updateUserPassword(id: Number, item: String){
+    return this.http.post<User>(this.URL + '/updatePassword/' + id, item, {withCredentials: true});
   }
 
   deleteUser(id: Number){

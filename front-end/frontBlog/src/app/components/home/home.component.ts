@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   constructor(private postService: PostService) { }
 
   ngOnInit() {
-    this.title = 'Blog o komputerach';
+    this.title = 'Nowinki z IT';
     this.getAllPosts();
   }
 

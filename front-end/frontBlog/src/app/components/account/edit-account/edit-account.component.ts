@@ -35,21 +35,32 @@ export class EditAccountComponent implements OnInit {
   constructor(private loginService: LoginService,
               private userService: UserService,
               private formBuilder: FormBuilder,
-              private router: Router,) { }
+              private router: Router,) {
+    this.loginService.getUserCredential().then(() => {
+      this.initUser().then(() => {
+        if (this.isLoggedIn == false) {
+          router.navigateByUrl('/');
+        }
+        this.getUser();
+      });
+    });
+               }
 
   ngOnInit() {
     this.initFormGroup();
-    this.loginService.getIsLoggedOk().subscribe(isLoggedIn => {
+
+  }
+
+  async initUser(){
+    await this.loginService.getIsLoggedOk().subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
     });
-    this.loginService.getRole().subscribe(role => {
+    await this.loginService.getRole().subscribe(role => {
       this.role = role;
     });
-    this.loginService.getUsername().subscribe(username => {
+    await this.loginService.getUsername().subscribe(username => {
       this.username = username;
     });
-
-    this.getUser();
   }
 
   initFormGroup(){
@@ -69,12 +80,16 @@ export class EditAccountComponent implements OnInit {
 
   async emailChangeButtonClicked(){
     const email = this.emailParams.value.email;
-    
+    await this.updateUserEmail(email).then((response) => {
+      if (response != null){
+        this.router.navigateByUrl('/account');
+      }
+    });
   }
 
 
-  async updateUser(user: UserDTO){
-    await this.userService.updateUser(this.user.userId, user).subscribe((response) => {
+  async updateUserEmail(email: String){
+    await this.userService.updateUserEmail(this.user.userId, email).subscribe((response) => {
       if (response != null){
         this.router.navigateByUrl('/account');
       } else {
@@ -83,4 +98,25 @@ export class EditAccountComponent implements OnInit {
     })
   }
 
+  async passwordChangeButtonClicked(){
+    const password = this.passwordParams.value.password;
+    await this.updateUserPassword(password).then((response) => {
+      if (response != null){
+        this.router.navigateByUrl('/account');
+      }
+    });
+  }
+
+
+  async updateUserPassword(password: String){
+    await this.userService.updateUserPassword(this.user.userId, password).subscribe((response) => {
+      if (response != null){
+        this.router.navigateByUrl('/account');
+      } else {
+        console.log('ups, bad response');
+      }
+    })
+  }
+
+  
 }

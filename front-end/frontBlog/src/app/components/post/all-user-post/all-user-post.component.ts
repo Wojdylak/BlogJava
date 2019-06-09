@@ -1,36 +1,42 @@
 import { Component, OnInit } from '@angular/core';
+import { Post } from 'src/app/entities/Post';
 import { LoginService } from 'src/app/service/login/login.service';
+import { PostService } from 'src/app/service/post/post.service';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from 'src/app/service/user/user.service';
 import { User } from 'src/app/entities/User';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-present-account',
-  templateUrl: './present-account.component.html',
-  styleUrls: ['./present-account.component.scss']
+  selector: 'app-all-user-post',
+  templateUrl: './all-user-post.component.html',
+  styleUrls: ['./all-user-post.component.scss']
 })
-export class PresentAccountComponent implements OnInit {
+export class AllUserPostComponent implements OnInit {
 
   username = 'Not logged in';
   role = '';
   isLoggedIn = false;
-  user: User;
+  posts: Post[] = [];
 
   constructor(private loginService: LoginService,
+              private postService: PostService,
               private userService: UserService,
-              private router: Router) {
+              private router: Router,) {
     this.loginService.getUserCredential().then(() => {
       this.initUser().then(() => {
         if (this.isLoggedIn == false) {
           router.navigateByUrl('/');
         }
-        this.getUser();
+        if (this.role != 'ROLE_WRITER') {
+          router.navigateByUrl('/');
+        }
+        this.getAllPosts();
       });
     });
                }
 
-  ngOnInit() {    
+  ngOnInit() {
   }
 
   async initUser(){
@@ -45,22 +51,19 @@ export class PresentAccountComponent implements OnInit {
     });
   }
 
-  async getUser(){
-    const response: any = await this.userService.getOneUserByNickname(this.username).catch((error: HttpErrorResponse) => {console.log(error)});
-    this.user = response;
+  async getAllPosts() {
+    const response: any = await this.postService.getAllPostByUserNickname(this.username).catch((error: HttpErrorResponse) => {console.log(error)});
+    this.posts = response;
   }
 
-  async deleteButtonClicked(){
-    await this.userService.banUser(this.user.userId).subscribe((response) => {
+  async deletePostButtonClicked(id: Number){
+    await this.postService.deletePost(id).subscribe((response) => {
       if (response == null){
-        this.loginService.logoutUser().then(() => {
-          this.router.navigateByUrl('/');
-        });
+        this.ngOnInit();
       } else {
         console.log('ups, bad response');
       }
     });
   }
-
 
 }

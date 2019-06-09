@@ -2,18 +2,26 @@
   <div class="row">
     <div class="col-2"></div>
     <div *ngIf="user" class="col">
-      <div class="row">
-        <form (ngSubmit)="emailButtonClicked()" [formGroup]="emailParams" >
-          <h2>Zmień e-mail</h2>
-          <div class="form-group">
-            <label for="email" class="col-md-4 col-form-label text-md-right"> E-mail</label>
-            <input id="email" type="text" class="form-control" formControlName="email" value="{{user.email}}" required>
+      <div class="row my-4">
+        <div class="col">
+          <form (ngSubmit)="emailChangeButtonClicked()" [formGroup]="emailParams" >
+            <h2>Zmień e-mail</h2>
+            <div class="form-group row">
+              <label for="email" class="col-md-2 col-form-label text-md-right"> E-mail:</label>
+              <div class="col-md-10">
+                <input id="email" type="text" class="form-control" formControlName="email" value="{{user.email}}" required>
+              </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+              <button class="btn btn-primary" [disabled]="!emailParams.valid"> Zmień </button>
           </div>
-          <button class="btn btn-primary" [disabled]="!emailParams.valid"> Zmień </button>
-        </form>
+          </form>
+        </div>
       </div>
       <div class="row">
-        <form (ngSubmit)="passwordButtonClicked()" [formGroup]="passwordParams" >
+        <div class="col">
+          <form (ngSubmit)="passwordChangeButtonClicked()" [formGroup]="passwordParams" >
             <h2>Zmień hasło</h2>
             <div class="form-group">
               <label for="password" class="col-md-4 col-form-label text-md-right"> Hasło </label>
@@ -25,6 +33,7 @@
             </div>
             <button class="btn btn-primary" [disabled]="!passwordParams.valid"> Zmień </button>
           </form>
+          </div>
       </div>
     </div>
     <div class="col-2"></div>

@@ -28,6 +28,11 @@ public class PostController {
         return postService.getAllPostsByCategoryId(categoryId);
     }
 
+    @GetMapping("/allByNickname/{nickname}")
+    public List<Post> getAllPostsByUserId(@PathVariable String nickname){
+        return postService.getAllPostsByUserNickname(nickname);
+    }
+
     @GetMapping("/one/{postId}")
     public Post getPostById(@PathVariable Integer postId){
         return postService.getPostById(postId);

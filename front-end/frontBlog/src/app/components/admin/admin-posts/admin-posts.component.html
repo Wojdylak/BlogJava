@@ -1,0 +1,31 @@
+<div class="container">
+  <h1>Posty</h1>
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped" >
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Tytuł</th>
+            <th scope="col">Autor</th>
+            <th scope="col">Kategoria</th>
+            <th scope="col">Data stworzenia</th>
+            <th scope="col">Usuń</th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr *ngFor="let post of posts; let i = index">
+            <th scope="row">{{ i }}</th>
+            <td>
+              <a class="post-small" [routerLink]="['/post', post.postId ]" >  {{ post.title }} </a>
+            </td>
+            <td>{{ post.user.nickname }}</td>
+            <td>{{ post.category.name }}</td>
+            <td>{{ post.createDate | date }}</td>
+            <td> <button class="btn btn-danger" (click)="deletePostButtonClicked(post.postId)" >Usuń</button> </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

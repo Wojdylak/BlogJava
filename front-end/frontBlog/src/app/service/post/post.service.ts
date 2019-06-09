@@ -25,15 +25,19 @@ export class PostService {
     return await this.http.get<Post>(this.URL + '/allByCategory/' + category_id, {withCredentials: true}).toPromise();
   }
 
+  async getAllPostByUserNickname(nickname: String){
+    return await this.http.get<Post>(this.URL + '/allByNickname/' + nickname, {withCredentials: true}).toPromise();
+  }
+
   createPost(item: PostDTO): Observable<any> {
     return this.http.post<Post>(this.URL + '/create', item, {withCredentials: true});
   }
 
-  updatePost(id: number, item: PostDTO){
+  updatePost(id: Number, item: PostDTO): Observable<any> {
     return this.http.post<Post>(this.URL + '/update/' + id, item, {withCredentials: true});
   }
 
-  deletePost(id: number){
+  deletePost(id: Number): Observable<any> {
     return this.http.delete<Post>(this.URL + '/delete/' + id, {withCredentials: true});
   }
 }

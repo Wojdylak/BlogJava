@@ -13,6 +13,7 @@ export class LoginService {
 
   constructor(private http: HttpClient,
               private router: Router) {
+    this.username.next('');
     this.getUserCredential().then(() => this.isLoggedInCorrectly());
   }
 

@@ -45,9 +45,34 @@ public class UserController {
         return  userService.updateUser(userId, userDTO);
     }
 
+    @PostMapping("/setRoleWriter/{userId}")
+    public void setRoleWriter(@PathVariable Integer userId){
+        userService.setRoleWriter(userId);
+    }
+
+    @PostMapping("/setRoleUser/{userId}")
+    public void setRoleUser(@PathVariable Integer userId){
+        userService.setRoleUser(userId);
+    }
+
+    @PostMapping("/updateEmail/{userId}")
+    public User updateUserEmail(@PathVariable Integer userId, @RequestParam String email){
+        return  userService.updateUserEmail(userId, email);
+    }
+
+    @PostMapping("/updatePassword/{userId}")
+    public User updateUserPassword(@PathVariable Integer userId, @RequestParam String password){
+        return  userService.updateUserPassword(userId, password);
+    }
+
     @PostMapping("/ban/{userId}")
     public void banUser(@PathVariable Integer userId){
         userService.banUser(userId);
+    }
+
+    @PostMapping("/unban/{userId}")
+    public void unbanUser(@PathVariable Integer userId){
+        userService.unbanUser(userId);
     }
 
     @DeleteMapping("/delete/{userId}")

@@ -9,8 +9,24 @@
         <a class="nav-item nav-link active" routerLink="">Strona główna</a>
         <a *ngIf="!isLoggedIn" class="nav-item nav-link active" routerLink="/login">Logowanie</a>
         <a *ngIf="!isLoggedIn" class="nav-item nav-link active" routerLink="/registration">Rejestracja</a>
-        <a *ngIf="isLoggedIn" class="nav-item nav-link active" routerLink="/account">Twoje konto {{ username }} </a>
-        <a *ngIf="isLoggedIn" class="nav-item nav-link active" (click)="logoutButtonClicked()" routerLink="/">Wyloguj</a>
+        
+        
+
+        <li *ngIf="isLoggedIn" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Panel
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item " routerLink="/account">Profil</a>
+            <a *ngIf="role=='ROLE_WRITER'" class="dropdown-item" routerLink="/post/create">Dodaj post</a>
+            <a *ngIf="role=='ROLE_WRITER'" class="dropdown-item" routerLink="/userallpost">Twoje posty</a>
+            <a *ngIf="role=='ROLE_ADMIN'" class="dropdown-item" routerLink="/admin/users">Użytkownicy </a>
+            <a *ngIf="role=='ROLE_ADMIN'" class="dropdown-item" routerLink="/admin/posts">Posty </a>
+            <div class="dropdown-divider"></div>
+            <a *ngIf="isLoggedIn" class="dropdown-item" (click)="logoutButtonClicked()" routerLink="/">Wyloguj</a>
+          </div>
+        </li>
+
       </div>
     </div>
   </div>

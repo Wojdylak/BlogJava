@@ -3,9 +3,11 @@ package com.example.demo.service;
 import com.example.demo.DTO.PostDTO;
 import com.example.demo.entities.Category;
 import com.example.demo.entities.Post;
+import com.example.demo.entities.User;
 import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.PostRepository;
+import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
     private final UserService userService;
 
     public List<Post> getAllPosts(){
@@ -26,6 +29,11 @@ public class PostService {
     public List<Post> getAllPostsByCategoryId(Integer categoryId){
         Category category = categoryRepository.findById(categoryId).orElseThrow(()-> new EntityNotFoundException("category"));
         return postRepository.findAllByCategoryIn(category);
+    }
+
+    public List<Post> getAllPostsByUserNickname(String nickname){
+        User user = userRepository.findAllByNicknameIn(nickname);
+        return postRepository.findAllByUserIn(user);
     }
 
     public Post getPostById(Integer postId){

@@ -15,6 +15,10 @@ import { CreatePostComponent } from './components/post/create-post/create-post.c
 import { PresentPostComponent } from './components/post/present-post/present-post.component';
 import { PresentAccountComponent } from './components/account/present-account/present-account.component';
 import { EditAccountComponent } from './components/account/edit-account/edit-account.component';
+import { AdminPostsComponent } from './components/admin/admin-posts/admin-posts.component';
+import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
+import { EditPostComponent } from './components/post/edit-post/edit-post.component';
+import { AllUserPostComponent } from './components/post/all-user-post/all-user-post.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,11 @@ import { EditAccountComponent } from './components/account/edit-account/edit-acc
     CreatePostComponent,
     PresentPostComponent,
     PresentAccountComponent,
-    EditAccountComponent
+    EditAccountComponent,
+    AdminPostsComponent,
+    AdminUsersComponent,
+    EditPostComponent,
+    AllUserPostComponent,
   ],
   imports: [
     BrowserModule,
