@@ -95,9 +95,18 @@ export class EditPostComponent implements OnInit {
   }
 
   async updatePostButtonClicked(){
-    const title = this.updatePostParams.value.title;
-    const category = this.updatePostParams.value.category;
-    const text = this.updatePostParams.value.text;
+    var title = this.updatePostParams.value.title;
+    if (title == null || title == ''){
+      title = this.post.title;
+    }
+    var category = this.updatePostParams.value.category;
+    if (category == null || category == ''){
+      category = this.post.category.categoryId;
+    }
+    var text = this.updatePostParams.value.text;
+    if (text == null || text == ''){
+      text = this.post.text;
+    }
     const post: PostDTO = new PostDTO(category, text, title);
     await this.updatePost(post).then((response) => {
       if (response != null){
